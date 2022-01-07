@@ -1,3 +1,5 @@
+<!--
+
 <template>
     <div>
       <div class="flex justify-center">
@@ -8,7 +10,7 @@
             <div>
               <InputForm
                 label="ユーザ名"
-                placeholder="◎◎文字以内で入力してください"
+                placeholder="◎◎文字以内で 入力してください"
                 msg="注意書きです！！！！！！！！！！！！！！！！！！！！！！"
                 class="mb-4"
               />
@@ -50,3 +52,5 @@ export default Vue.extend({
 
 })
 </script>
+
+-->
