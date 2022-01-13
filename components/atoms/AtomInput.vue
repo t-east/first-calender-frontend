@@ -18,7 +18,7 @@ import Vue from 'vue'
 export default Vue.extend({
   props: {
     disabled: { type: Boolean, required: false, default: false },
-    value: { type: String, required: false, default: null },
+    value: { type: [String, Date, Number], required: false, default: null },
     placeholder: { type: String, required: false, default: '' },
     type: { type: String, required: false, default: '' }
   },

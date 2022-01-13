@@ -5,8 +5,11 @@
         :label="$props.label"
       />
       <AtomInput
+        :value="$props.value"
         class="mb-2"
         :placeholder="$props.placeholder"
+        :type="$props.type"
+        @input="$emit('input', $event)"
       />
       <AtomInputMessage
         :msg="$props.msg"
@@ -31,7 +34,8 @@ export default Vue.extend({
     placeholder: { type: String, required: false, default: '' },
     label: { type: String, required: false, default: '' },
     msg: { type: String, required: false, default: '' },
-    type: { type: String, required: false, default: '' }
+    type: { type: String, required: false, default: '' },
+    value: { type: String, required: false, default: '' }
   },
 
 })
