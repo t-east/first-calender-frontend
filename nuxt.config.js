@@ -25,7 +25,12 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
+    { src: '~/plugins/vue-full-calendar', ssr: false }
   ],
+
+  // axios: {
+  //   proxy: true
+  // },
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -40,9 +45,25 @@ export default {
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
+    // '@nuxtjs/axios',
+    // '@nuxtjs/proxy'
   ],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
   }
+}
+
+module.exports = {
+  mode: 'universal',
+// ...省略...
+/*
+  ** Plugins to load before mounting the App
+  */
+  plugins: [
+     // 以下を追記
+    { src: '~/plugins/vue-full-calendar', ssr: false }
+  ],
+
+// ...省略...
 }
