@@ -15,8 +15,11 @@
     "@fullcalendar/interaction": "^5.10.1",
     "@fullcalendar/moment": "^5.10.1",
     "@fullcalendar/timegrid": "^5.10.1",
+    "@fullcalendar/vue": "^5.10.1",
     "core-js": "^3.15.1",
-    "nuxt": "^2.15.7"
+    "moment": "^2.29.1",
+    "nuxt": "^2.15.7",
+    "vue2-event-calendar": "^1.1.81"
   },
   "devDependencies": {
     "@nuxt/types": "^2.15.7",

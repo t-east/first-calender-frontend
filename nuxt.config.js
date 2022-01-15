@@ -51,6 +51,17 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
+    extend(config, ctx) {
+      // Run ESLint on save
+      if (process.server && process.browser) {
+      config.module.rules.push({
+          enforce: 'pre',
+          test: /\.(js|vue)$/,
+          loader: 'eslint-loader',
+          exclude: /(node_modules)/
+      })
+      }
+  }
   }
 }
 
@@ -62,7 +73,7 @@ module.exports = {
   */
   plugins: [
      // 以下を追記
-    { src: '~/plugins/vue-full-calendar', ssr: false }
+    { src: '~/plugins/vue-full-calendar.js', ssr: false }
   ],
 
 // ...省略...
