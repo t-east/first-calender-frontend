@@ -1,8 +1,8 @@
 <template>
     <div>
       <div class="flex justify-center">
-        <div class="my-12 py-8 px-16 rounded-lg bg-gray-100 w-1/2 shadow-2xl border">
-            <h1 class="text-2xl font-bold mb-8 text-wheat-600">
+        <div class="my-12 py-8 px-16 rounded-lg bg-gray-100 w-1/2 shadow shadow-2xl border">
+            <h1 class="text-2xl font-bold mb-8 text-wheat">
                 ユーザ登録
             </h1>
             <div>
