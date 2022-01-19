@@ -1,6 +1,6 @@
 <template>
   <button
-      class="bg-green-500 hover:bg-green-800 text-white hover:opacity-80 font-bold text-sm focus:outline-none px-3 sm:px-6 py-2 rounded-full"
+      class="bg-wheat hover:bg-wheat text-white hover:opacity-80 font-bold text-sm focus:outline-none px-3 sm:px-6 py-2 rounded-full"
       @click="$emit('click')"
   >
       {{ $props.val }}
