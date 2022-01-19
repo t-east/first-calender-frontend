@@ -2,12 +2,13 @@
   <div>
     <div class="flex">
       <Calendar
-        :selected-date="$data.selectedDate"
         :events="$data.events"
         class="mx-4"
+        @detail="selectEvent"
       />
       <EventList :events="$data.events" />
     </div>
+    <EventDetailModal v-if="$data.isDetailModalActive" :event="$data.selectedEvent" @close="$data.isDetailModalActive=false" />
   </div>
 </template>
 
@@ -17,12 +18,14 @@ import Vue from 'vue';
 import AtomButton from '~/components/atoms/AtomButton.vue';
 import Calendar from '~/components/organism/events/Calendar.vue';
 import EventList from '~/components/organism/events/EventList.vue';
+import EventDetailModal from '~/components/organism/modals/EventDetailModal.vue';
 
 export default Vue.extend({
   components: {
     AtomButton,
     Calendar,
-    EventList
+    EventList,
+    EventDetailModal
   },
   data() {
     return {
@@ -51,8 +54,16 @@ export default Vue.extend({
           month: 1,
           date: 9
         }
-      ]
+      ],
+      isDetailModalActive: false,
+      selectedEvent: {}
     };
+  },
+  methods: {
+    selectEvent(event: Event) {
+      this.$data.isDetailModalActive=true;
+      this.$data.selectedEvent=event;
+    } 
   }
 });
 </script>

@@ -40,7 +40,7 @@
         >
           <p class="text-lg">{{ day.day }}</p>
           <div v-for="(event, i) in putEvent($data.year, $data.month, day.day)" :key="i">
-            <div class="mx-8 p-4 text-black" :class="'bg-wheat'">
+            <div class="mx-8 p-4 text-black" :class="'bg-wheat'" @click="$emit('detail', event)">
               {{event.name}}
             </div>
           </div>
@@ -64,7 +64,6 @@ export default Vue.extend({
     ChevronRightIcon
   },
   props: {
-    selectedDate: { type: Date, required: true },
     events: { type: Array as Vue.PropType<Event[]>, required: false, default: []}
   },
   data() {
@@ -142,12 +141,6 @@ export default Vue.extend({
     selectedDay(date:any):void {
       this.$emit('click', date);
     },
-    /**
-     * 選択した日にマークをつける
-     */
-    isSelectedDate(date:any):boolean {
-      return this.$data.selectedDate.valueOf() === date.valueOf();
-    }
   }
 });
 </script>

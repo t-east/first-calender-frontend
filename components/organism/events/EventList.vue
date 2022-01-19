@@ -22,7 +22,6 @@ export default Vue.extend({
     EventItem
   },
   props: {
-    selectedDate: { type: Date, required: true },
     events: { type: Array as Vue.PropType<Event[]>, required: false, default: []}
   },
   data() {
