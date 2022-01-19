@@ -36,11 +36,11 @@
     <div v-for="(week, j) in calendars" :key="j" class="grid grid-cols-7 my-3 text-center">
       <div v-for="(day, k) in week" :key="k" @click="selectedDay(day.date)" class="h-32">
         <div
-          class="m-auto p-1 rounded cursor-pointer hover:bg-gray-50"
+          class="m-auto p-1 rounded cursor-pointer"
         >
           <p class="text-lg">{{ day.day }}</p>
           <div v-for="(event, i) in putEvent($data.year, $data.month, day.day)" :key="i">
-            <div class="bg-yellow-200 mx-8 p-4 text-black">
+            <div class="mx-8 p-4 text-black" :class="'bg-wheat'">
               {{event.name}}
             </div>
           </div>
