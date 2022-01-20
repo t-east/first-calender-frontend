@@ -34,26 +34,22 @@ export default Vue.extend({
           name: '予定1',
           year: 2022,
           month: 1,
-          date: 3
+          date: 3,
+          tags: [
+            {
+              id: 1,
+              label: 'タグ1'
+            },
+            {
+              id: 2,
+              label: 'タグ2'
+            },
+            {
+              id: 3,
+              label: 'タグ3'
+            }
+          ]
         },
-        {
-          name: '予定2',
-          year: 2022,
-          month: 1,
-          date: 8
-        },
-        {
-          name: '予定3',
-          year: 2022,
-          month: 1,
-          date: 9
-        },
-        {
-          name: '予定4',
-          year: 2022,
-          month: 1,
-          date: 9
-        }
       ],
       isDetailModalActive: false,
       selectedEvent: {}
