@@ -94,6 +94,9 @@ export default Vue.extend({
   },
   methods: {
     // TODO イベントアップデート
+    selectColor(): any {
+      return "#" + Math.floor(Math.random() * 16777215).toString(16);
+    }
   }
 
 })
