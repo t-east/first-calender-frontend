@@ -3,6 +3,7 @@ export interface Event {
   year: number;
   month: number;
   date: number;
+  tags: EventTag[];
 }
 
 export interface EventTag {

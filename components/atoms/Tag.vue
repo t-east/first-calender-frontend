@@ -1,6 +1,6 @@
 <template>
-  <div class="flex bg-gray-400 rounded-lg">
-      <p>{{ $props.tag.label }}</p>
+  <div class="flex p-1 bg-gray-400 rounded-lg">
+      <p class="mr-1">{{ $props.tag.label }}</p>
       <div
         class="cursor-pointer"
         @click="$emit('delete',$props.tag.id)"
@@ -14,9 +14,14 @@
 import Vue from 'vue'
 
 import { EventTag } from "~/interfaces/event"
+
+import CloseIcon from '~/components/icons/CloseIcon.vue';
 export default Vue.extend({
+  components: {
+		CloseIcon
+  },
   props: {
-    event: { type: Object as Vue.PropType<EventTag>, required: true }
+    tag: { type: Object as Vue.PropType<EventTag>, required: true }
   },
 })
 </script>
