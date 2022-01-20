@@ -9,18 +9,19 @@
           <CloseIcon />
         </div>
       </div>
-      <div class="flex justify-center text-2xl font-bold mb-4">{{ $props.event.name }}</div>
-      <div class="px-16">
+      <AtomInput
+        v-model="$data.title"
+        class="flex justify-center text-2xl font-bold mb-4"
+        placeholder="タイトル"
+        type="text"
+      />
+      <div>
         <ViewForm
           label="日時"
           :value="printDate"
         />
         <p>範囲を指定</p>
         <AtomCheckbox />
-        <ViewForm
-          label="日時"
-          :value="printDate"
-        />
         <ViewForm
           label="日時"
           :value="printDate"
@@ -48,6 +49,9 @@ import {Event} from "~/interfaces/event"
 import CloseIcon from '~/components/icons/CloseIcon.vue';
 import AtomLabel from '~/components/atoms/AtomLabel.vue';
 import AtomButton from '~/components/atoms/AtomButton.vue';
+import AtomInput from '~/components/atoms/AtomInput.vue'
+import AtomInputLabel from '~/components/atoms/AtomInputLabel.vue'
+import AtomInputMessage from '~/components/atoms/AtomInputMessage.vue'
 import AtomCheckbox from '~/components/atoms/AtomCheckbox.vue';
 import ViewForm from '~/components/molecules/ViewForm.vue';
 import BaseModal from '~/components/organism/modals/BaseModal.vue'
@@ -58,10 +62,30 @@ export default Vue.extend({
     AtomLabel,
     ViewForm,
     AtomButton,
-    AtomCheckbox
+    AtomCheckbox,
+    AtomInput,
+    AtomInputLabel,
+    AtomInputMessage 
+  },
+  mounted() {
+    this.$data.title=this.$props.event.name
   },
   props: {
     event: { type: Object as Vue.PropType<Event>, required: true}
+  },
+  data() {
+    return {
+      title: '',
+      url: null,
+      fromDate: null,
+      toDate: null,
+      fromTime: null,
+      toTime: null,
+      reminds: [],
+      tags: [],
+      isOpenOnCalendar: true,
+      detail: ''
+    }
   },
   computed: {
     printDate():any {
