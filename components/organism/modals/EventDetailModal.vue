@@ -1,6 +1,5 @@
-
 <template>
-    <BaseModal>
+    <BaseModal size="5/6">
       <div class="flex justify-end">
         <div
           class="cursor-pointer"
@@ -9,31 +8,31 @@
           <CloseIcon />
         </div>
       </div>
-      <AtomInput
-        v-model="$data.title"
-        class="flex justify-center text-2xl font-bold mb-4"
-        placeholder="タイトル"
-        type="text"
-      />
+      <div class="w-1/2 flex justify-center">
+        <AtomInput
+          v-model="$data.title"
+          class="text-2xl font-bold mb-4 border-b-2 border-gray-400"
+          placeholder="タイトル"
+          type="text"
+          :is-for-name="true"
+        />
+      </div>
       <div>
         <EventTags
           :tags="$data.tags"
           @new-tag="createTag"
+          class="mb-4"
         />
         <EventDateInput
           :date="$props.event.date"
           :time="$props.event.time"
-          class="w-2/3"
+          class="w-full"
         />
-        <ViewForm
-          label="日時"
-          :value="printDate"
-        />
-        <p>範囲を指定</p>
-        <AtomCheckbox />
-        <ViewForm
-          label="日時"
-          :value="printDate"
+        <div class="border my-2 border-gray-500 w-full" />
+        <AtomTextArea
+          v-model="$data.detail"
+          class="text-md w-full"
+          placeholder="詳細"
         />
         <div class="flex justify-center">
           <AtomButton
@@ -59,6 +58,7 @@ import CloseIcon from '~/components/icons/CloseIcon.vue';
 import AtomLabel from '~/components/atoms/AtomLabel.vue';
 import AtomButton from '~/components/atoms/AtomButton.vue';
 import AtomInput from '~/components/atoms/AtomInput.vue'
+import AtomTextArea from '~/components/atoms/AtomTextArea.vue'
 import AtomInputLabel from '~/components/atoms/AtomInputLabel.vue'
 import AtomInputMessage from '~/components/atoms/AtomInputMessage.vue'
 import AtomCheckbox from '~/components/atoms/AtomCheckbox.vue';
@@ -66,6 +66,7 @@ import ViewForm from '~/components/molecules/ViewForm.vue';
 import EventTags from '~/components/molecules/events/EventTags.vue';
 import EventDateInput from '~/components/molecules/events/EventDateInput.vue';
 import BaseModal from '~/components/organism/modals/BaseModal.vue'
+import NewTagModal from '~/components/molecules/user/modal/NewTagModal.vue'
 export default Vue.extend({
   components: {
     BaseModal,
@@ -78,7 +79,9 @@ export default Vue.extend({
     AtomInputLabel,
     AtomInputMessage,
     EventTags,
-    EventDateInput
+    EventDateInput,
+    NewTagModal,
+    AtomTextArea
   },
   props: {
     event: { type: Object as Vue.PropType<Event>, required: true}
@@ -119,3 +122,9 @@ export default Vue.extend({
 
 })
 </script> 
+
+<style>
+textarea:focus {
+    outline: none;
+}
+</style>

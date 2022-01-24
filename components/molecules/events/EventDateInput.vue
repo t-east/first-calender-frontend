@@ -1,46 +1,58 @@
 <template>
-  <div class="flex">
-    <div class="mr-1">日程</div>
-    <AtomInput
-      v-model="$data.updatedFromDate"
-      class="mr-2"
+  <div>
+    <div :class="{'justify-center':$data.hasRange}">
+      <div class="flex">
+        <div class="mr-2">
+          <!-- <div class="mr-1">日程</div> -->
+          <AtomInput
+            v-model="$data.updatedFromDate"
+            type="date"
+            class="w-2/3"
+          />
+        </div>
+        <div v-if="$data.hasTime" class="flex">
+          <AtomInput
+            v-model="$data.updatedToTime"
+            class="mb-2 w-1/3"
+          />
+          <div class="mx-1 mb-2">:</div>
+          <AtomInput
+            v-model="$data.updatedToTime"
+            class="mb-2 w-1/3"
+          />
+        </div>
+      </div>
+      <div v-if="$data.hasRange" class="flex">
+        <div class="mr-2">
+          <!-- <div class="mr-1">日程</div> -->
+          <AtomInput
+            v-model="$data.updatedToDate"
+            type="date"
+          />
+        </div>
+        <div v-if="$data.hasTime" class="flex">
+          <AtomInput
+            v-model="$data.updatedToTime"
+            class="mb-2 w-1/3"
+          />
+          <div class="mx-1 mb-2">:</div>
+          <AtomInput
+            v-model="$data.updatedToTime"
+            class="mb-2 w-1/3"
+          />
+        </div>
+      </div>
+    </div>
+    <AtomCheckbox
+      text="範囲を指定"
+      :checked="$data.hasRange"
+      @input="$data.hasRange=!$data.hasRange"
     />
-   <div class="mr-1">時間</div>
-    <div>
-      <AtomInput
-        v-model="$data.updatedFromTime"
-      />
-      <AtomButton
-        v-if="hasFromTime"
-        val="クリア"
-        class="mr-4"
-        @click="$emit('close')"
-      />
-    </div>
-    <div class="mr-1">日程</div>
-    <div>
-      <AtomInput
-        v-model="$data.updatedToDate"
-      />
-      <AtomButton
-        v-if="hasToDate"
-        val="クリア"
-        class="mr-4"
-        @click="$emit('close')"
-      />
-    </div>
-    <div class="mr-1">時間</div>
-    <div>
-      <AtomInput
-        v-model="$data.updatedToTime"
-      />
-      <AtomButton
-        v-if="hasToTime"
-        val="クリア"
-        class="mr-4"
-        @click="$emit('close')"
-      />
-    </div>
+    <AtomCheckbox
+      text="時刻を含む"
+      :checked="$data.hasTime"
+      @input="$data.hasTime=!$data.hasTime"
+    />
   </div>
 </template>
 
@@ -49,11 +61,13 @@ import Vue from 'vue'
 
 import AtomInput from "~/components/atoms/AtomInput.vue"
 import AtomButton from '~/components/atoms/AtomButton.vue';
+import AtomCheckbox from '~/components/atoms/AtomCheckbox.vue';
 
 export default Vue.extend({
   components: {
     AtomInput,
-    AtomButton
+    AtomButton,
+    AtomCheckbox
   },
   props: {
     fromDate: { type: Date, required: false, default: null },
@@ -61,10 +75,12 @@ export default Vue.extend({
   },
   data() {
     return {
-			updatedFromDate: {},
-      updatedFromTime: {},
-      updatedToDate: {},
-      updatedToTime: {}
+			updatedFromDate: '',
+      updatedFromTime: '',
+      updatedToDate: '',
+      updatedToTime: '',
+      hasRange: false,
+      hasTime: false
     }
   },
 	watch: {
@@ -83,13 +99,13 @@ export default Vue.extend({
   },
   computed: {
     hasFromTime(): boolean {
-      return this.$data.uploadedFromTime !== null;
+      return this.$data.updatedFromTime !== '';
     },
     hasToDate(): boolean {
-      return this.$data.uploadedToDate !== null;
+      return this.$data.updatedToDate !== '';
     },
     hasToTime(): boolean {
-      return this.$data.uploadedToTime !== null;
+      return this.$data.updatedToTime !== '';
     }
   },
   methods: {
