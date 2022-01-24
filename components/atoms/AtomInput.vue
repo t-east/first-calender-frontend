@@ -1,7 +1,8 @@
 <template>
   <input
     ref="input"
-    class="border border-gray-400 rounded px-1 py-1 w-full"
+    class="rounded px-1 py-1 w-full"
+    :class="{'border border-gray-400': !$props.isForName}"
     :placeholder="$props.placeholder"
     :disabled="$props.disabled"
     :value="$props.value"
@@ -9,7 +10,7 @@
     @input="$emit('input', $event.target.value)"
     @change="$emit('change', $event.target.value)"
     @blur="$emit('blur', $event.target.value)"
-    @keyup.enter="$emit('onEnter')"
+    @keydown.enter="$emit('on-enter')"
   >
 </template>
 
@@ -20,7 +21,8 @@ export default Vue.extend({
     disabled: { type: Boolean, required: false, default: false },
     value: { type: String, required: false, default: null },
     placeholder: { type: String, required: false, default: '' },
-    type: { type: String, required: false, default: '' }
+    type: { type: String, required: false, default: '' },
+    isForName: { type: Boolean, required: false, default: false },
   },
   methods: {
     focus (): void {

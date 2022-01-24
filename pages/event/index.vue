@@ -1,13 +1,14 @@
 <template>
   <div>
-    <div class="flex">
+    <div class="flex justify-between">
       <Calendar
-        :selected-date="$data.selectedDate"
         :events="$data.events"
         class="mx-4"
+        @detail="selectEvent"
       />
       <EventList :events="$data.events" />
     </div>
+    <EventDetailModal v-if="$data.isDetailModalActive" :event="$data.selectedEvent" @close="$data.isDetailModalActive=false" />
   </div>
 </template>
 
@@ -17,12 +18,14 @@ import Vue from 'vue';
 import AtomButton from '~/components/atoms/AtomButton.vue';
 import Calendar from '~/components/organism/events/Calendar.vue';
 import EventList from '~/components/organism/events/EventList.vue';
+import EventDetailModal from '~/components/organism/modals/EventDetailModal.vue';
 
 export default Vue.extend({
   components: {
     AtomButton,
     Calendar,
-    EventList
+    EventList,
+    EventDetailModal
   },
   data() {
     return {
@@ -31,28 +34,32 @@ export default Vue.extend({
           name: '予定1',
           year: 2022,
           month: 1,
-          date: 3
+          date: 3,
+          tags: [
+            {
+              id: 1,
+              label: 'タグ1'
+            },
+            {
+              id: 2,
+              label: 'タグ2'
+            },
+            {
+              id: 3,
+              label: 'タグ3'
+            }
+          ]
         },
-        {
-          name: '予定2',
-          year: 2022,
-          month: 1,
-          date: 8
-        },
-        {
-          name: '予定3',
-          year: 2022,
-          month: 1,
-          date: 9
-        },
-        {
-          name: '予定4',
-          year: 2022,
-          month: 1,
-          date: 9
-        }
-      ]
+      ],
+      isDetailModalActive: false,
+      selectedEvent: {}
     };
+  },
+  methods: {
+    selectEvent(event: Event) {
+      this.$data.isDetailModalActive=true;
+      this.$data.selectedEvent=event;
+    } 
   }
 });
 </script>
