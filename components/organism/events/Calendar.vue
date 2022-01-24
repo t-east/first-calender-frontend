@@ -28,20 +28,20 @@
           />
       </div>
     </div>
-    <div class="grid grid-cols-7 mt-3 text-center">
+    <div class="grid w-full grid-cols-7 mt-3 text-center">
       <div v-for="(text, i) in $data.dayOfWeek" :key="i">
         <span :class="{'text-gray-400': text === '日' || text === '土'}" class="font-bold">{{ text }}</span>
       </div>
     </div>
-    <div v-for="(week, j) in calendars" :key="j" class="grid grid-cols-7 my-3 text-center">
+    <div v-for="(week, j) in calendars" :key="j" class="grid grid-cols-7 w-full my-3 text-center">
       <div v-for="(day, k) in week" :key="k" @click="selectedDay(day.date)" class="h-32">
         <div
-          class="m-auto p-1 rounded cursor-pointer"
+          class="m-auto p-auto w-full rounded cursor-pointer"
         >
           <p class="text-lg">{{ day.day }}</p>
           <div v-for="(event, i) in putEvent($data.year, $data.month, day.day)" :key="i">
-            <div class="mx-8 p-4 text-black" :class="'bg-wheat'" @click="$emit('detail', event)">
-              {{event.name}}
+            <div class="p-1 text-black bg-wheat" @click="$emit('detail', event)">
+              {{event.title}}
             </div>
           </div>
         </div>
@@ -131,9 +131,8 @@ export default Vue.extend({
       this.$data.month = this.$data.currentDate.getMonth() + 1;
     },
     putEvent(year:number, month:number, date:number):any {
-      const event:Event[] = this.$props.events.filter((e:any) => e.year === year && e.month === month && e.date === date);
+      const event:Event[] = this.$props.events.filter((e:any) => e.date.fromDate.getFullYear() == year && e.date.fromDate.getMonth() == month && e.date.fromDate.getDate() == date );
       if (event.length) {
-        console.log(event);
         return event
       }
       return;

@@ -1,14 +1,20 @@
 <template>
-  <div>
-    <div class="flex justify-between">
-      <Calendar
-        :events="$data.events"
-        class="mx-4"
-        @detail="selectEvent"
-      />
-      <EventList :events="$data.events" />
+  <div class="w-full">
+    <div class="flex">
+      <div class="w-2/3 p-4">
+        <Calendar
+          :events="$data.events"
+          @detail="selectEvent"
+        />
+      </div>
+      <div class="w-1/3 p-4">
+        <EventList
+          :events="$data.events"
+          @detail="selectEvent"
+        />
+      </div>
     </div>
-    <EventDetailModal v-if="$data.isDetailModalActive" :event="$data.selectedEvent" @close="$data.isDetailModalActive=false" />
+    <EventDetailModal v-if="$data.isDetailModalActive" :input-event="$data.selectedEvent" @close="$data.isDetailModalActive=false" />
   </div>
 </template>
 
@@ -31,10 +37,36 @@ export default Vue.extend({
     return {
       events: [
         {
-          name: '予定1',
-          year: 2022,
-          month: 1,
-          date: 3,
+          title: '予定1',
+          date: {
+            fromDate: new Date(2022,2,18, 1, 14),
+            toDate: new Date(2022,2,18, 1,30),
+            hasRange: false,
+            isAllday: false
+          },
+          tags: [
+            {
+              id: 1,
+              label: 'タグ1'
+            },
+            {
+              id: 2,
+              label: 'タグ2'
+            },
+            {
+              id: 3,
+              label: 'タグ3'
+            }
+          ]
+        },
+        {
+          title: '予定2',
+          date: {
+            fromDate: new Date(2022,2,18, 4, 24),
+            toDate: new Date(2022,2,18, 1,30),
+            hasRange: true,
+            isAllday: false
+          },
           tags: [
             {
               id: 1,

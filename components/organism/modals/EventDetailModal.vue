@@ -10,7 +10,7 @@
       </div>
       <div class="w-1/2 flex justify-center">
         <AtomInput
-          v-model="$data.title"
+          v-model="$data.event.title"
           class="text-2xl font-bold mb-4 border-b-2 border-gray-400"
           placeholder="タイトル"
           type="text"
@@ -19,18 +19,24 @@
       </div>
       <div>
         <EventTags
-          :tags="$data.tags"
+          :tags="$data.event.tags"
           @new-tag="createTag"
           class="mb-4"
         />
         <EventDateInput
-          :date="$props.event.date"
-          :time="$props.event.time"
+          :input-date="$data.event.date"
           class="w-full"
+        />
+        <AtomInput
+          v-model="$data.event.url"
+          class="text-lg mb-4 border-b-2 border-gray-400"
+          placeholder="URL"
+          type="url"
+          :is-for-name="true"
         />
         <div class="border my-2 border-gray-500 w-full" />
         <AtomTextArea
-          v-model="$data.detail"
+          v-model="$data.event.detail"
           class="text-md w-full"
           placeholder="詳細"
         />
@@ -84,30 +90,17 @@ export default Vue.extend({
     AtomTextArea
   },
   props: {
-    event: { type: Object as Vue.PropType<Event>, required: true}
+    inputEvent: { type: Object as Vue.PropType<Event>, required: true}
   },
   data() {
     return {
-      title: '',
-      url: null,
-      fromDate: null,
-      toDate: null,
-      fromTime: null,
-      toTime: null,
-      reminds: [],
-      tags: [],
-      isOpenOnCalendar: true,
-      detail: '',
+      event: {} as Event,
       isCreateTagModalActive: false
     }
   },
-  mounted() {
-    this.$data.title=this.$props.event.name
-    this.$data.tags=this.$props.event.tags
-  },
-  computed: {
-    printDate():any {
-      return this.$props.event.year + '/' + this.$props.event.month + '/' + this.$props.event.date
+  watch: {
+    event() {
+      this.$data.event = this.$props.inputEvent;
     }
   },
   methods: {

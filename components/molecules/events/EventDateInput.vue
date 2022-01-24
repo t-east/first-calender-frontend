@@ -5,20 +5,22 @@
         <div class="mr-2">
           <!-- <div class="mr-1">日程</div> -->
           <AtomInput
-            v-model="$data.updatedFromDate"
+            v-model="$data.date.fromDate"
             type="date"
             class="w-2/3"
           />
         </div>
         <div v-if="$data.hasTime" class="flex">
           <AtomInput
-            v-model="$data.updatedToTime"
+            v-model="$data.fromHour"
             class="mb-2 w-1/3"
+            @change="updateDate"
           />
           <div class="mx-1 mb-2">:</div>
           <AtomInput
-            v-model="$data.updatedToTime"
+            v-model="$data.fromMinute"
             class="mb-2 w-1/3"
+            @change="updateDate"
           />
         </div>
       </div>
@@ -26,19 +28,21 @@
         <div class="mr-2">
           <!-- <div class="mr-1">日程</div> -->
           <AtomInput
-            v-model="$data.updatedToDate"
+            v-model="$data.date.toDate"
             type="date"
           />
         </div>
         <div v-if="$data.hasTime" class="flex">
           <AtomInput
-            v-model="$data.updatedToTime"
+            v-model="$data.toHour"
             class="mb-2 w-1/3"
+            @change="updateDate"
           />
           <div class="mx-1 mb-2">:</div>
           <AtomInput
-            v-model="$data.updatedToTime"
+            v-model="$data.toMinute"
             class="mb-2 w-1/3"
+            @change="updateDate"
           />
         </div>
       </div>
@@ -59,6 +63,8 @@
 <script lang="ts">
 import Vue from 'vue'
 
+import {EventDate} from "~/interfaces/event"
+
 import AtomInput from "~/components/atoms/AtomInput.vue"
 import AtomButton from '~/components/atoms/AtomButton.vue';
 import AtomCheckbox from '~/components/atoms/AtomCheckbox.vue';
@@ -70,45 +76,35 @@ export default Vue.extend({
     AtomCheckbox
   },
   props: {
-    fromDate: { type: Date, required: false, default: null },
-    fromTime: { type: Date, required: false, default: null }
+    inputDate: { type: Object as Vue.PropType<EventDate>, required: true}
   },
   data() {
     return {
-			updatedFromDate: '',
-      updatedFromTime: '',
-      updatedToDate: '',
-      updatedToTime: '',
-      hasRange: false,
-      hasTime: false
+      date: {} as EventDate,
+      fromHour: '',
+      fromMinute: '',
+      toHour: '',
+      toMinute: '',
     }
   },
-	watch: {
-		fromDate(value) {
-			this.$data.updatedFromDate=value;
-		},
-    fromTime(value) {
-			this.$data.updatedFromTime=value;
-		},
-    ToDate(value) {
-			this.$data.updatedToDate=value;
-		},
-    ToTime(value) {
-			this.$data.updatedToTime=value;
-		}
-  },
-  computed: {
-    hasFromTime(): boolean {
-      return this.$data.updatedFromTime !== '';
-    },
-    hasToDate(): boolean {
-      return this.$data.updatedToDate !== '';
-    },
-    hasToTime(): boolean {
-      return this.$data.updatedToTime !== '';
-    }
+  mounted() {
+    this.$data.date = this.$props.inputDate
+    this.$data.fromHour = this.$data.date.fromDate.getHours();
+    this.$data.fromMinute = this.$data.date.fromDate.getMinutes();
+    this.$data.toHour = this.$data.date.toDate.getHours();
+    this.$data.toMinute = this.$data.date.toDate.getMinutes();
   },
   methods: {
+    updateDate() {
+      if (!this.$data.isAllday) {
+        this.$data.fromDate.setHours(this.$data.fromHour);
+        this.$data.fromDate.setMinutes(this.$data.fromMinute);
+        if (this.$data.date.hasRange) {
+          this.$data.toDate.setHours(this.$data.toHour);
+          this.$data.toDate.setMinutes(this.$data.toMinute);
+        }
+      }
+    },
 		deleteTag(id: number) {
 			console.log(id);
 		},

@@ -1,7 +1,9 @@
 <template>
   <div class="w-full p-4 border-2 shadow">
     <div v-for="(event, i) in $props.events" :key="i">
+      <div class="cursor-pointer" @click="$emit('detail', event)">
         <EventItem :event="event" />
+      </div>
     </div>
   </div>
 </template>
