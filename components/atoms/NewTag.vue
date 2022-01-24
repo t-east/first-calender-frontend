@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex p-1 font-bold border border-dotted text-gray-600 border-gray-600 rounded-lg"
+    class="flex p-1 font-bold border border-dotted text-gray-600 border-gray-600 rounded-lg cursor-pointer"
     @click="$emit('new-tag')"
   >
     <p>+ New</p>
