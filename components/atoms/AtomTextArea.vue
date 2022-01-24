@@ -1,7 +1,6 @@
 <template>
   <textarea
     ref="area"
-    :name="name"
     :value="value"
     :placeholder="placeholder"
     :rows="rows"
@@ -14,8 +13,7 @@
 import Vue from 'vue'
 export default Vue.extend({
   props: {
-    value: { type: String, required: true },
-    name: { type: String, required: true },
+    value: { type: String, required: false, default: '' },
     placeholder: { type: String, required: false },
     rows: { type: Number, required: false },
     cols: { type: Number, required: false }

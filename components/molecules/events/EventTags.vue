@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<div class="flex bg-white p-1">
-				<div v-for="tag of $data.tagList" :key="tag.id">
+				<div v-for="tag of $props.tags" :key="tag.id">
 					<Tag
 						class="m-2"
 						@delete="deleteTag"
@@ -30,7 +30,7 @@ export default Vue.extend({
 		NewTagModal
   },
   props: {
-    tags: { type: Array as Vue.PropType<EventTag[]>, required: true }
+    tags: { type: Array as Vue.PropType<EventTag[]>, required: false }
   },
   data() {
     return {
@@ -40,7 +40,7 @@ export default Vue.extend({
     }
   },
 	mounted() {
-		this.$data.tagList=this.$props.tags
+		this.$data.tagList = this.$props.tags
 	},
   methods: {
 		deleteTag(id: number) {

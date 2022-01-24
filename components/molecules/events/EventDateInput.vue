@@ -1,62 +1,61 @@
 <template>
   <div>
-    <div :class="{'justify-center':$data.hasRange}">
+    <div>
       <div class="flex">
         <div class="mr-2">
-          <!-- <div class="mr-1">日程</div> -->
           <AtomInput
-            v-model="$data.date.fromDate"
-            type="date"
+            v-model="$data.fromd"
+            type="datetime-local"
             class="w-2/3"
           />
+          {{ $data.idate }}
         </div>
-        <div v-if="$data.hasTime" class="flex">
-          <AtomInput
-            v-model="$data.fromHour"
+        <div class="flex">
+          <!-- <AtomInput
+            v-model="$data.fromd"
             class="mb-2 w-1/3"
             @change="updateDate"
           />
           <div class="mx-1 mb-2">:</div>
           <AtomInput
-            v-model="$data.fromMinute"
+            v-model="$data.fromd"
             class="mb-2 w-1/3"
             @change="updateDate"
-          />
+          /> -->
         </div>
       </div>
-      <div v-if="$data.hasRange" class="flex">
+      <div class="flex">
         <div class="mr-2">
-          <!-- <div class="mr-1">日程</div> -->
           <AtomInput
-            v-model="$data.date.toDate"
-            type="date"
+            v-model="$data.tod"
+            type="datetime-local"
           />
         </div>
-        <div v-if="$data.hasTime" class="flex">
-          <AtomInput
-            v-model="$data.toHour"
+        <div class="flex">
+          <!-- <AtomInput
+            v-model="$props.value.toHour"
             class="mb-2 w-1/3"
             @change="updateDate"
           />
           <div class="mx-1 mb-2">:</div>
           <AtomInput
-            v-model="$data.toMinute"
+            v-model="$props.value.toMinute"
             class="mb-2 w-1/3"
             @change="updateDate"
-          />
+          /> -->
         </div>
       </div>
     </div>
-    <AtomCheckbox
+    <!-- <AtomCheckbox
       text="範囲を指定"
-      :checked="$data.hasRange"
-      @input="$data.hasRange=!$data.hasRange"
+      :checked="$props.value.hasRange"
+      @input="$props.value.hasRange=!$props.value.hasRange"
     />
     <AtomCheckbox
       text="時刻を含む"
-      :checked="$data.hasTime"
-      @input="$data.hasTime=!$data.hasTime"
-    />
+      :checked="$props.value.isAllday"
+      @input="$props.value.isAllday=!$props.value.isAllday"
+    /> -->
   </div>
 </template>
 
@@ -76,35 +75,27 @@ export default Vue.extend({
     AtomCheckbox
   },
   props: {
-    inputDate: { type: Object as Vue.PropType<EventDate>, required: true}
+    value: { type: Object as Vue.PropType<EventDate>, required: false}
+  },
+  computed: {
+    idate(): EventDate {
+      return this.$props.value;
+    }
   },
   data() {
     return {
-      date: {} as EventDate,
-      fromHour: '',
+      fromd: '',
+      tod: '',
       fromMinute: '',
       toHour: '',
       toMinute: '',
+      idate: this.$props.value
     }
   },
   mounted() {
-    this.$data.date = this.$props.inputDate
-    this.$data.fromHour = this.$data.date.fromDate.getHours();
-    this.$data.fromMinute = this.$data.date.fromDate.getMinutes();
-    this.$data.toHour = this.$data.date.toDate.getHours();
-    this.$data.toMinute = this.$data.date.toDate.getMinutes();
+    this.$data.idate = this.$props.value
   },
   methods: {
-    updateDate() {
-      if (!this.$data.isAllday) {
-        this.$data.fromDate.setHours(this.$data.fromHour);
-        this.$data.fromDate.setMinutes(this.$data.fromMinute);
-        if (this.$data.date.hasRange) {
-          this.$data.toDate.setHours(this.$data.toHour);
-          this.$data.toDate.setMinutes(this.$data.toMinute);
-        }
-      }
-    },
 		deleteTag(id: number) {
 			console.log(id);
 		},

@@ -24,7 +24,7 @@
           class="mb-4"
         />
         <EventDateInput
-          :input-date="$data.event.date"
+          v-model="$data.event.date"
           class="w-full"
         />
         <AtomInput
@@ -90,7 +90,7 @@ export default Vue.extend({
     AtomTextArea
   },
   props: {
-    inputEvent: { type: Object as Vue.PropType<Event>, required: true}
+    inputEvent: { type: Object as Vue.PropType<Event>, required: false}
   },
   data() {
     return {
@@ -98,10 +98,8 @@ export default Vue.extend({
       isCreateTagModalActive: false
     }
   },
-  watch: {
-    event() {
-      this.$data.event = this.$props.inputEvent;
-    }
+  mounted() {
+    this.$data.event = this.$props.inputEvent;
   },
   methods: {
     // TODO イベントアップデート
