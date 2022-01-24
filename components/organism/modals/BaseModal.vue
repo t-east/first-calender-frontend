@@ -1,6 +1,6 @@
 <template>
-  <div class="fixed inset-0 rounded-xl flex shadow-lg items-center justify-center z-10">
-    <div class="bg-gray-100 text-black py-4 px-12 w-5/6 h-5/6 rounded-2xl relative">
+  <div class="fixed inset-0 rounded-xl bg-opacity-75 bg-gray-400 flex shadow-lg items-center justify-center z-10">
+    <div :class="`bg-white text-black opacity-100 py-4 px-12 w-${$props.size} h-${$props.size} rounded-2xl relative`">
       <slot />
     </div>
   </div>
@@ -10,5 +10,8 @@
 import Vue from 'vue';
 
 export default Vue.extend({
+  props: {
+    size: { type: String, required: false, default: ''},
+  }
 });
 </script>
