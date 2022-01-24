@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="flex">
+    <div class="flex justify-between">
       <Calendar
         :events="$data.events"
         class="mx-4"
