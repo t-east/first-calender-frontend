@@ -24,7 +24,6 @@
       <Nuxt class="mt-16" />
     </div>
     <footer class="bg-wheat pt-8">
-      footer情報
     </footer>
   </div>
 </template>
@@ -34,7 +33,6 @@ import Vue from 'vue';
 
 import UserMenuModal from '~/components/molecules/user/modal/UserMenuModal.vue'
 import ChevronDownIcon from '~/components/icons/ChevronDownIcon.vue'
-
 export default Vue.extend({
   components: {
 		UserMenuModal,
