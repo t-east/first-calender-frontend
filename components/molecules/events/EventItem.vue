@@ -18,8 +18,9 @@ export default Vue.extend({
   },
   computed: {
     eventDate():string{
-      if (this.$props.event.date.fromDate !== null){
-        return this.$props.event.date.fromDate.getFullYear().toString() + '/' + this.$props.event.date.fromDate.getMonth().toString() + '/' + this.$props.event.date.fromDate.getDate().toString();
+      const date = new Date(this.$props.event.from_date);
+      if (this.$props.event.from_date !== null){
+        return date.getFullYear().toString() + '/' + (date.getMonth()+1).toString() + '/' + date.getDate().toString();
       } else {return ''}
     }
   },

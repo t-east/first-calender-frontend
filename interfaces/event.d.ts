@@ -20,7 +20,7 @@ export interface Event {
 }
 
 export interface Events {
-  events: Event;
+  events: Event[];
   total: number;
 }
   
