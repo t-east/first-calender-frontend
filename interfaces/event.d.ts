@@ -1,7 +1,6 @@
 export interface EventDate {
-  fromDate: Date;
-  toDate: Date;
-  hasRange: boolean;
+  from_date: Date;
+  to_date: Date;
   isAllday: boolean;
 }
 
@@ -12,14 +11,16 @@ export interface EventTag {
 
 export interface Event {
   title: string;
-  date: EventDate
-  tags: EventTag[];
-  url: string;
-  detail: string;
+  // tags: EventTag[];
+  // url: string;
+  from_date: Date;
+  to_date: Date;
+  is_all_day: boolean;
+  description_text: string;
 }
 
-export interface EventList {
-  events: Event;
+export interface Events {
+  events: Event[];
   total: number;
 }
   

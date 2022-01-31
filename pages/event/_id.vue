@@ -4,14 +4,14 @@
       <div class="p-4" :class="{'w-2/3': $data.isCalendarShow}">
         <Calendar
           v-if="$data.isCalendarShow"
-          :events="$data.events"
+          :events="$data.eventList.events"
           @detail="selectEvent"
         />
       </div>
       <div class="p-4" :class="{'w-1/3': $data.isCalendarShow}">
         <EventList
           v-if="$data.isListShow"
-          :events="$data.events"
+          :events="$data.eventList.events"
           @detail="selectEvent"
         />
       </div>
@@ -23,6 +23,7 @@
 
 <script lang="ts">
 import Vue from 'vue';
+import {Events} from '~/interfaces/event' 
 
 import AtomButton from '~/components/atoms/AtomButton.vue';
 import Calendar from '~/components/organism/events/Calendar.vue';
@@ -42,64 +43,16 @@ export default Vue.extend({
     return {
       isCalendarShow: true,
       isListShow: true,
-      eventss: {},
-      events: [
-        {
-          title: '予定1',
-          date: {
-            fromDate: new Date(2022,2,18, 1, 14),
-            toDate: new Date(2022,2,18, 1,30),
-            hasRange: false,
-            isAllday: false
-          },
-          tags: [
-            {
-              id: 1,
-              label: 'タグ1'
-            },
-            {
-              id: 2,
-              label: 'タグ2'
-            },
-            {
-              id: 3,
-              label: 'タグ3'
-            }
-          ]
-        },
-        {
-          title: '予定2',
-          date: {
-            fromDate: new Date(2022,2,18, 4, 24),
-            toDate: new Date(2022,2,18, 1,30),
-            hasRange: true,
-            isAllday: false
-          },
-          tags: [
-            {
-              id: 1,
-              label: 'タグ1'
-            },
-            {
-              id: 2,
-              label: 'タグ2'
-            },
-            {
-              id: 3,
-              label: 'タグ3'
-            }
-          ]
-        },
-      ],
+      eventList: {} as Events,
       isDetailModalActive: false,
       selectedEvent: {}
     };
   },
   mounted() {
     console.log(this.$store.state.user)
-    this.$axios.$get(`api/event/${this.$route.params.id}`, this.$data.user)
-      .then((res: any) => {
-        this.$data.eventss = res;
+    this.$axios.$get(`api/event/${this.$route.params.id}`)
+      .then((res: Events) => {
+        this.$data.eventList = res;
       })
       .catch((error: Error) => {
         console.error(error);

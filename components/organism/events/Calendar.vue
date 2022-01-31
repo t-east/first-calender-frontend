@@ -131,7 +131,12 @@ export default Vue.extend({
       this.$data.month = this.$data.currentDate.getMonth() + 1;
     },
     putEvent(year:number, month:number, date:number):any {
-      const event:Event[] = this.$props.events.filter((e:any) => e.date.fromDate.getFullYear() == year && e.date.fromDate.getMonth() == month && e.date.fromDate.getDate() == date );
+      const event:Event[] = this.$props.events.filter(
+        (e:Event) => 
+        new Date(e.from_date).getFullYear() == year &&
+        new Date(e.from_date).getMonth()+1 == month &&
+        new Date(e.from_date).getDate() == date
+      );
       if (event.length) {
         return event
       }
