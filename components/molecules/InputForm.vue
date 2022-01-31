@@ -6,6 +6,9 @@
       />
       <AtomInput
         class="mb-2"
+        :value="$props.value"
+        :type="$props.type"
+        @input="$emit('input', $event)"
         :placeholder="$props.placeholder"
       />
       <AtomInputMessage
@@ -28,6 +31,7 @@ export default Vue.extend({
     AtomInputMessage
   },
   props: {
+    value: { type: String, required: false, default: '' },
     placeholder: { type: String, required: false, default: '' },
     label: { type: String, required: false, default: '' },
     msg: { type: String, required: false, default: '' },

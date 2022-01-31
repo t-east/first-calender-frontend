@@ -2,6 +2,11 @@ export default {
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
   ssr: false,
 
+  publicRuntimeConfig: {
+    baseURL: 'http://locahost:3000',
+    apiURL: 'http://localhost:8080/',
+  },
+
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     title: 'first-calender',
@@ -40,7 +45,12 @@ export default {
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
+    '@nuxtjs/axios',
   ],
+
+  axios: {
+    prefix: '',
+  },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
