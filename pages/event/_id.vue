@@ -6,6 +6,7 @@
           v-if="$data.isCalendarShow"
           :events="$data.eventList.events"
           @detail="selectEvent"
+          @create="createEvent"
         />
       </div>
       <div class="p-4" :class="{'w-1/3': $data.isCalendarShow}">
@@ -19,7 +20,7 @@
     <EventDetailModal
       v-if="$data.isDetailModalActive"
       :event-id="$data.selectedEvent.event_id"
-      @close="$data.isDetailModalActive=false"
+      @close="closeDetalModal"
       @input="updateEvent"
     />
     <EventSelectView class="my-12" @select-view="selectView" />
@@ -54,14 +55,7 @@ export default Vue.extend({
     };
   },
   mounted() {
-    console.log(this.$store.state.user)
-    this.$axios.$get(`api/event/${this.$route.params.id}`)
-      .then((res: Events) => {
-        this.$data.eventList = res;
-      })
-      .catch((error: Error) => {
-        console.error(error);
-      });
+    this.getEvent()
   },
   methods: {
     selectEvent(event: Event) {
@@ -80,8 +74,35 @@ export default Vue.extend({
         this.$data.isListShow = true
       }
     },
-    updateEvent(dataName: string, data: [string,Date]) {
-      this.$data.selectedEvent[dataName] = data
+    getEvent() {
+      this.$axios.$get(`api/event/${this.$route.params.id}`)
+        .then((res: Events) => {
+          this.$data.eventList = res;
+        })
+        .catch((error: Error) => {
+          console.error(error);
+        });
+    },
+    createEvent() {
+      console.log(this.$data.event)
+      this.$axios.$post(`/api/event/`, {
+        title: '',
+        description_text: '',
+        to_date: new Date(),
+        from_date: new Date(),
+        is_all_day: false,
+        user_id: this.$route.params.id
+      })
+        .then((res: CreatedEvent) => {
+          this.$data.selectedEvent=res;
+          this.$data.isDetailModalActive=true;
+        })
+        .catch(() => {
+        })
+    },
+    closeDetalModal() {
+      this.$data.isDetailModalActive=false
+      this.getEvent()
     }
   }
 });

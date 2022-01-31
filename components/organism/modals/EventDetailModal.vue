@@ -143,10 +143,9 @@ export default Vue.extend({
         })
     },
     updateEvent (): Promise<void> {
-      console.log(this.$data.event)
-      return this.$axios.$put(`/api/event/${this.$route.params.id}/${this.$props.eventId}`)
+      return this.$axios.$put(`/api/event/${this.$route.params.id}/${this.$props.eventId}`, this.$data.event)
         .then((res: CreatedEvent) => {
-          this.$data.event = res
+          this.$emit('close')
         })
         .catch(() => {
         })
