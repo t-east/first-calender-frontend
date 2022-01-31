@@ -23,10 +23,28 @@
           @new-tag="createTag"
           class="mb-4"
         />
-        <EventDateInput
-          v-model="$data.event.date"
-          class="w-full"
-        />
+        <div class="flex">
+        <div class="mr-2">
+          <AtomInput
+            v-model="this.$data.event.from_date"
+            type="datetime-local"
+            class="w-2/3"
+          />
+          {{ $data.idate }}
+        </div>
+        <div class="flex">
+        </div>
+      </div>
+      <div class="flex">
+        <div class="mr-2">
+          <AtomInput
+            v-model="$data.tod"
+            type="datetime-local"
+          />
+        </div>
+        <div class="flex">
+        </div>
+      </div>
         <AtomInput
           v-model="$data.event.url"
           class="text-lg mb-4 border-b-2 border-gray-400"
@@ -100,6 +118,14 @@ export default Vue.extend({
   },
   mounted() {
     this.$data.event = this.$props.inputEvent;
+  },
+  computed: {
+    fromDate(): Date {
+      return new Date(this.$data.event.from_date)
+    },
+    toDate(): Date {
+      return new Date(this.$data.event.to_date)
+    }
   },
   methods: {
     // TODO イベントアップデート

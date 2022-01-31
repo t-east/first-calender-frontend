@@ -32,30 +32,9 @@
           />
         </div>
         <div class="flex">
-          <!-- <AtomInput
-            v-model="$props.value.toHour"
-            class="mb-2 w-1/3"
-            @change="updateDate"
-          />
-          <div class="mx-1 mb-2">:</div>
-          <AtomInput
-            v-model="$props.value.toMinute"
-            class="mb-2 w-1/3"
-            @change="updateDate"
-          /> -->
         </div>
       </div>
     </div>
-    <!-- <AtomCheckbox
-      text="範囲を指定"
-      :checked="$props.value.hasRange"
-      @input="$props.value.hasRange=!$props.value.hasRange"
-    />
-    <AtomCheckbox
-      text="時刻を含む"
-      :checked="$props.value.isAllday"
-      @input="$props.value.isAllday=!$props.value.isAllday"
-    /> -->
   </div>
 </template>
 
