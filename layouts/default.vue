@@ -43,7 +43,6 @@ export default Vue.extend({
       isUserMenuActive: false,
     };
   },
-  methods: {}
 });
 </script>
 

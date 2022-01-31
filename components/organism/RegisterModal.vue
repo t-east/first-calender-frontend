@@ -8,9 +8,9 @@
           <CloseIcon />
         </div>
       </div>
-      <h1 class="flex justify-center text-2xl font-bold mb-4 text-wheat-600">
+      <p class="flex justify-center text-2xl font-bold mb-4 text-wheat-600">
           ユーザ登録
-      </h1>
+      </p>
       <div class="px-4">
         <InputForm
           v-model="$data.user.user_name"
@@ -99,8 +99,9 @@ export default Vue.extend({
         await this.$axios.$post('api/user/', this.$data.user)
           .then((res: RegisteredUser) => {
             this.$store.commit('user/register', res)
-            console.log(this.$store.state.user)
-            this.$emit('register')
+            const user_id = this.$store.state.user.user.user_id
+            console.log(user_id)
+            this.$emit('register', user_id)
           })
           .catch((error: Error) => {
             console.error(error);
