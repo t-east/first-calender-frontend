@@ -44,6 +44,7 @@
               {{event.title}}
             </div>
           </div>
+          <div @click="create">aaaa</div>
         </div>
       </div>
     </div>
@@ -53,7 +54,7 @@
 <script lang="ts">
 import Vue from 'vue';
 
-import {Event} from "~/interfaces/event"
+import {Event, CreatedEvent} from "~/interfaces/event"
 
 import ChevronLeftIcon from "~/components/icons/ChevronLeftIcon.vue"
 import ChevronRightIcon from "~/components/icons/ChevronRightIcon.vue"
@@ -61,10 +62,10 @@ import ChevronRightIcon from "~/components/icons/ChevronRightIcon.vue"
 export default Vue.extend({
   components: {
     ChevronLeftIcon,
-    ChevronRightIcon
+    ChevronRightIcon,
   },
   props: {
-    events: { type: Array as Vue.PropType<Event[]>, required: false, default: []}
+    events: { type: Array as Vue.PropType<CreatedEvent[]>, required: false, default: [] as CreatedEvent[]}
   },
   data() {
     return {

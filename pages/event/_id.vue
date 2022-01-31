@@ -16,14 +16,19 @@
         />
       </div>
     </div>
-    <EventDetailModal v-if="$data.isDetailModalActive" :input-event="$data.selectedEvent" @close="$data.isDetailModalActive=false" />
+    <EventDetailModal
+      v-if="$data.isDetailModalActive"
+      :event-id="$data.selectedEvent.event_id"
+      @close="$data.isDetailModalActive=false"
+      @input="updateEvent"
+    />
     <EventSelectView class="my-12" @select-view="selectView" />
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
-import {Events} from '~/interfaces/event' 
+import {Events, CreatedEvent} from '~/interfaces/event' 
 
 import AtomButton from '~/components/atoms/AtomButton.vue';
 import Calendar from '~/components/organism/events/Calendar.vue';
@@ -45,7 +50,7 @@ export default Vue.extend({
       isListShow: true,
       eventList: {} as Events,
       isDetailModalActive: false,
-      selectedEvent: {}
+      selectedEvent: {} as CreatedEvent
     };
   },
   mounted() {
@@ -60,8 +65,8 @@ export default Vue.extend({
   },
   methods: {
     selectEvent(event: Event) {
-      this.$data.isDetailModalActive=true;
       this.$data.selectedEvent=event;
+      this.$data.isDetailModalActive=true;
     } ,
     selectView(viewId: number) {
       this.$data.isCalendarShow =false
@@ -74,6 +79,9 @@ export default Vue.extend({
       } else {
         this.$data.isListShow = true
       }
+    },
+    updateEvent(dataName: string, data: [string,Date]) {
+      this.$data.selectedEvent[dataName] = data
     }
   }
 });

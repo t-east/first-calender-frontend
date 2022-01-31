@@ -7,6 +7,7 @@
     :disabled="$props.disabled"
     :value="$props.value"
     :type="$props.type"
+    :step="$props.step"
     @input="$emit('input', $event.target.value)"
     @change="$emit('change', $event.target.value)"
     @blur="$emit('blur', $event.target.value)"
@@ -19,7 +20,8 @@ import Vue from 'vue'
 export default Vue.extend({
   props: {
     disabled: { type: Boolean, required: false, default: false },
-    value: { type: String, required: false, default: null },
+    step: { type: Number, required: false, default: 1 },
+    value: { type: [String,Date], required: false, default: null },
     placeholder: { type: String, required: false, default: '' },
     type: { type: String, required: false, default: '' },
     isForName: { type: Boolean, required: false, default: false },
