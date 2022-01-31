@@ -18,19 +18,19 @@
         />
       </div>
       <div>
-        <EventTags
-          :tags="$data.event.tags"
+        <!-- <EventTags
+          :tags="$props.inputEvent.tags"
           @new-tag="createTag"
           class="mb-4"
-        />
+        /> -->
         <div class="flex">
         <div class="mr-2">
           <AtomInput
-            v-model="this.$data.event.from_date"
+            v-model="$data.event.from_date"
             type="datetime-local"
+            :value="60"
             class="w-2/3"
           />
-          {{ $data.idate }}
         </div>
         <div class="flex">
         </div>
@@ -38,8 +38,9 @@
       <div class="flex">
         <div class="mr-2">
           <AtomInput
-            v-model="$data.tod"
+            v-model="$data.event.to_date"
             type="datetime-local"
+            :value="60"
           />
         </div>
         <div class="flex">
@@ -54,7 +55,7 @@
         />
         <div class="border my-2 border-gray-500 w-full" />
         <AtomTextArea
-          v-model="$data.event.detail"
+          v-model="$data.event.description_text"
           class="text-md w-full"
           placeholder="詳細"
         />
@@ -67,6 +68,7 @@
           <AtomButton
             val="更新"
             class="mr-4"
+            @click="updateEvent"
           />
         </div>
       </div>
@@ -76,7 +78,7 @@
 <script lang="ts">
 import Vue from 'vue'
 
-import {Event} from "~/interfaces/event"
+import {Event, CreatedEvent} from "~/interfaces/event"
 
 import CloseIcon from '~/components/icons/CloseIcon.vue';
 import AtomLabel from '~/components/atoms/AtomLabel.vue';
@@ -108,35 +110,47 @@ export default Vue.extend({
     AtomTextArea
   },
   props: {
-    inputEvent: { type: Object as Vue.PropType<Event>, required: false}
+    eventId: { type: Number, required: true }
   },
   data() {
     return {
-      event: {} as Event,
+      event: {
+        title: '',
+        description_text: '',
+        // url: '',
+        from_date: new Date(),
+        to_date: new Date(),
+        is_all_day: false,
+      } as Event,
       isCreateTagModalActive: false
     }
   },
-  mounted() {
-    this.$data.event = this.$props.inputEvent;
-  },
-  computed: {
-    fromDate(): Date {
-      return new Date(this.$data.event.from_date)
-    },
-    toDate(): Date {
-      return new Date(this.$data.event.to_date)
+  watch: {
+    eventId () {
+      this.getEvent()
     }
+  },
+  mounted () {
+    this.getEvent()
   },
   methods: {
-    // TODO イベントアップデート
-    selectColor(): any {
-      return "#" + Math.floor(Math.random() * 16777215).toString(16);
+    getEvent (): Promise<void> {
+      return this.$axios.$get(`/api/event/${this.$route.params.id}/${this.$props.eventId}`)
+        .then((res: CreatedEvent) => {
+          this.$data.event = res
+        })
+        .catch(() => {
+        })
     },
-    createTag() {
-      this.$data.isCreateTagModalActive = true;
-    }
+    updateEvent (): Promise<void> {
+      return this.$axios.$put(`/api/event/${this.$route.params.id}/${this.$props.eventId}`, this.$data.event)
+        .then((res: CreatedEvent) => {
+          this.$emit('close')
+        })
+        .catch(() => {
+        })
+    },
   }
-
 })
 </script> 
 

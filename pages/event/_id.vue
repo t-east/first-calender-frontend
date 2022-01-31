@@ -6,6 +6,7 @@
           v-if="$data.isCalendarShow"
           :events="$data.eventList.events"
           @detail="selectEvent"
+          @create="createEvent"
         />
       </div>
       <div class="p-4" :class="{'w-1/3': $data.isCalendarShow}">
@@ -16,14 +17,19 @@
         />
       </div>
     </div>
-    <EventDetailModal v-if="$data.isDetailModalActive" :input-event="$data.selectedEvent" @close="$data.isDetailModalActive=false" />
+    <EventDetailModal
+      v-if="$data.isDetailModalActive"
+      :event-id="$data.selectedEvent.event_id"
+      @close="closeDetalModal"
+      @input="updateEvent"
+    />
     <EventSelectView class="my-12" @select-view="selectView" />
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
-import {Events} from '~/interfaces/event' 
+import {Events, CreatedEvent} from '~/interfaces/event' 
 
 import AtomButton from '~/components/atoms/AtomButton.vue';
 import Calendar from '~/components/organism/events/Calendar.vue';
@@ -45,23 +51,16 @@ export default Vue.extend({
       isListShow: true,
       eventList: {} as Events,
       isDetailModalActive: false,
-      selectedEvent: {}
+      selectedEvent: {} as CreatedEvent
     };
   },
   mounted() {
-    console.log(this.$store.state.user)
-    this.$axios.$get(`api/event/${this.$route.params.id}`)
-      .then((res: Events) => {
-        this.$data.eventList = res;
-      })
-      .catch((error: Error) => {
-        console.error(error);
-      });
+    this.getEvent()
   },
   methods: {
     selectEvent(event: Event) {
-      this.$data.isDetailModalActive=true;
       this.$data.selectedEvent=event;
+      this.$data.isDetailModalActive=true;
     } ,
     selectView(viewId: number) {
       this.$data.isCalendarShow =false
@@ -74,6 +73,36 @@ export default Vue.extend({
       } else {
         this.$data.isListShow = true
       }
+    },
+    getEvent() {
+      this.$axios.$get(`api/event/${this.$route.params.id}`)
+        .then((res: Events) => {
+          this.$data.eventList = res;
+        })
+        .catch((error: Error) => {
+          console.error(error);
+        });
+    },
+    createEvent() {
+      console.log(this.$data.event)
+      this.$axios.$post(`/api/event/`, {
+        title: '',
+        description_text: '',
+        to_date: new Date(),
+        from_date: new Date(),
+        is_all_day: false,
+        user_id: this.$route.params.id
+      })
+        .then((res: CreatedEvent) => {
+          this.$data.selectedEvent=res;
+          this.$data.isDetailModalActive=true;
+        })
+        .catch(() => {
+        })
+    },
+    closeDetalModal() {
+      this.$data.isDetailModalActive=false
+      this.getEvent()
     }
   }
 });

@@ -1,9 +1,3 @@
-export interface EventDate {
-  from_date: Date;
-  to_date: Date;
-  isAllday: boolean;
-}
-
 export interface EventTag {
   id: number;
   label: string;
@@ -19,8 +13,18 @@ export interface Event {
   description_text: string;
 }
 
+export interface CreatedEvent {
+  title: string;
+  description_text: string;
+  to_date: Date;
+  from_date: Date;
+  is_all_day: boolean;
+  event_id: number;
+  user_id: number;
+}
+
 export interface Events {
-  events: Event[];
+  events: CreatedEvent[];
   total: number;
 }
   

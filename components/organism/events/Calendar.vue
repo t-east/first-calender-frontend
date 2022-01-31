@@ -47,13 +47,15 @@
         </div>
       </div>
     </div>
+    <AtomAddButton @click="$emit('create')" />
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
 
-import {Event} from "~/interfaces/event"
+import {Event, CreatedEvent} from "~/interfaces/event"
+import AtomAddButton from "~/components/atoms/event/AtomAddButton.vue"
 
 import ChevronLeftIcon from "~/components/icons/ChevronLeftIcon.vue"
 import ChevronRightIcon from "~/components/icons/ChevronRightIcon.vue"
@@ -61,10 +63,11 @@ import ChevronRightIcon from "~/components/icons/ChevronRightIcon.vue"
 export default Vue.extend({
   components: {
     ChevronLeftIcon,
-    ChevronRightIcon
+    ChevronRightIcon,
+    AtomAddButton
   },
   props: {
-    events: { type: Array as Vue.PropType<Event[]>, required: false, default: []}
+    events: { type: Array as Vue.PropType<CreatedEvent[]>, required: false, default: [] as CreatedEvent[]}
   },
   data() {
     return {

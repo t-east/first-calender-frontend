@@ -2,8 +2,8 @@
   <div class="font-family">
     <header class="fixed w-full top-0 flex items-center bg-wheat flex-wrap z-50">
       <div class="flex-1 ml-4 my-4">
-        <NuxtLink to="/" class="text-col_14 text-moca font-bold text-xl">
-          スケジュール管理アプリ（仮題）
+        <NuxtLink to="/" id="titlefont" class="text-col_14 text-moca font-bold text-xl">
+          Calendar App
         </NuxtLink>
       </div>
       <div class="inline-flex pr-4 md:pr-8">
@@ -47,7 +47,8 @@ export default Vue.extend({
 </script>
 
 <style scoped>
-.font-family {
-  font-family: 'Hiragino Kaku Gothic ProN';
-}
+@import url('https://fonts.googleapis.com/css?family=Caveat');
+  #titlefont{
+    font-family: 'Caveat', cursive;
+  }
 </style>
