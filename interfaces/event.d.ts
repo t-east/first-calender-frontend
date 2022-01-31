@@ -17,4 +17,9 @@ export interface Event {
   url: string;
   detail: string;
 }
+
+export interface EventList {
+  events: Event;
+  total: number;
+}
   

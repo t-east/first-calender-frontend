@@ -3,7 +3,7 @@
     <div class="full bg-wheat">
       <div class="py-96 flex justify-center">
         <div>
-          <h id="titlefont" class="text-8xl">Calendar App</h>
+          <h1 id="titlefont" class="text-8xl">Calendar App</h1>
           <AtomButton
             val="キャンセル"
             class="mr-4"
@@ -39,9 +39,10 @@ export default Vue.extend({
     }
   },
   methods: {
-    register() {
+    register(user_id: number) {
       this.$data.isRegisterModalActive=false
-      this.$router.push('/event')
+      console.log(`/event/${user_id}`)
+      this.$router.push(`/event/${user_id}`)
     }
   }
 
