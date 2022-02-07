@@ -2,7 +2,6 @@
   <input
     ref="input"
     class="rounded px-1 py-1 w-full"
-    :class="{'border border-gray-400': !$props.isForName}"
     :placeholder="$props.placeholder"
     :disabled="$props.disabled"
     :value="$props.value"
@@ -24,7 +23,6 @@ export default Vue.extend({
     value: { type: [String,Date], required: false, default: null },
     placeholder: { type: String, required: false, default: '' },
     type: { type: String, required: false, default: '' },
-    isForName: { type: Boolean, required: false, default: false },
   },
   methods: {
     focus (): void {
