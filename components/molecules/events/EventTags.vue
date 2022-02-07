@@ -1,10 +1,10 @@
 <template>
 	<div>
 		<div class="flex bg-white p-1">
-				<div v-for="tag of $props.tags" :key="tag.id">
+				<div v-for="tag of $data.tagList" :key="tag.id">
 					<Tag
 						class="m-2"
-						@delete="deleteTag"
+						@delete="deleteTag(tag.tag_id)"
 						:tag="tag"
 					/>
 				</div>
@@ -19,7 +19,7 @@
 <script lang="ts">
 import Vue from 'vue'
 
-import { EventTag } from '~/interfaces/event';
+import { EventTagCreate, EventTag, Tags } from '~/interfaces/tag';
 
 import Tag from '~/components/atoms/Tag.vue'
 import NewTagModal from '~/components/molecules/user/modal/NewTagModal.vue'
@@ -30,7 +30,7 @@ export default Vue.extend({
 		NewTagModal
   },
   props: {
-    tags: { type: Array as Vue.PropType<EventTag[]>, required: false }
+    eventId: { type: Number, required: false }
   },
   data() {
     return {
@@ -40,16 +40,40 @@ export default Vue.extend({
     }
   },
 	mounted() {
-		this.$data.tagList = this.$props.tags
+		this.getTagList()
 	},
   methods: {
-		deleteTag(id: number) {
-			console.log(id);
+    createTag(label:string) {
+      const h = Math.floor(Math.random() * 360);
+			let newTag = {} as EventTagCreate
+			newTag.label=label
+			newTag.color = `hsl(${h}, 80%, 90%)`;
+      newTag.event_id = this.$props.eventId
+      this.$axios.$post(`/api/tag/`, newTag)
+				.then((res: EventTag) => {
+          console.log(res)
+          this.getTagList()
+				})
+				.catch(() => {
+				})	
 		},
-		createTag(tag:EventTag) {
-			
-		}
-  }
-
+    deleteTag(tag_id: number) {
+      this.$axios.$delete(`/api/tag/${this.$props.eventId}/${tag_id}`)
+				.then((res: EventTag) => {
+          console.log(res)
+          this.getTagList()
+				})
+				.catch(() => {
+				})	
+		},
+    getTagList() {
+      this.$axios.$get(`/api/tag/${this.$props.eventId}`)
+        .then((res: Tags) => {
+          this.$data.tagList = res.tags
+        })
+        .catch(() => {
+        })
+    }
+	}
 })
 </script>
