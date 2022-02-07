@@ -88,8 +88,8 @@ export default Vue.extend({
       this.$axios.$post(`/api/event/`, {
         title: '',
         description_text: '',
-        to_date: new Date(year, month, day),
-        from_date: new Date(year, month, day),
+        to_date: new Date(year, month, day, 9, 0, 0),
+        from_date: new Date(year, month, day, 9, 0, 0),
         is_all_day: false,
         user_id: this.$route.params.id
       })

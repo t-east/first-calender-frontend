@@ -150,7 +150,7 @@ export default Vue.extend({
       this.$emit('click', date);
     },
     createEvent(day: number):void {
-      this.$emit('create', this.$data.year, this.$data.month, day)
+      this.$emit('create', this.$data.year, this.$data.month-1, day)
     }
   }
 });
