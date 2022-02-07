@@ -1,11 +1,11 @@
 <template>
   <textarea
     ref="area"
-    :value="value"
+    :value="$props.value"
     :placeholder="placeholder"
     :rows="rows"
     :cols="cols"
-    @input="$emit('input', $data.text)"
+    @input="$emit('input', $event.target.value)"
   />
 </template>
 
@@ -17,11 +17,6 @@ export default Vue.extend({
     placeholder: { type: String, required: false },
     rows: { type: Number, required: false },
     cols: { type: Number, required: false }
-  },
-  data() {
-    return {
-      text: ''
-    }
   },
   watch: {
     textareaVal() {

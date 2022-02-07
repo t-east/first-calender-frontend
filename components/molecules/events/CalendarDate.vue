@@ -1,9 +1,10 @@
 <template>
   <div
+    class="my-1"
     @mouseover="$data.isHovered = true"
     @mouseleave="$data.isHovered = false"
   >
-    <p class="text-lg">{{ $props.day }}</p>
+    <p v-if="!$data.isHovered" class="text-lg">{{ $props.day }}</p>
     <AtomAddButton v-if="$data.isHovered" @click="$emit('create', $props.day)" />
   </div>     
 </template>
@@ -17,7 +18,7 @@ export default Vue.extend({
     AtomAddButton
   },
   props: {
-    day: { type: Number, required: true}
+    day: { type: [String,Number], required: true}
   },
   data() {
     return {
