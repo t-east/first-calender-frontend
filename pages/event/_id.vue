@@ -83,13 +83,13 @@ export default Vue.extend({
           console.error(error);
         });
     },
-    createEvent() {
+    createEvent(year:number, month:number, day:number) {
       console.log(this.$data.event)
       this.$axios.$post(`/api/event/`, {
         title: '',
         description_text: '',
-        to_date: new Date(),
-        from_date: new Date(),
+        to_date: new Date(year, month, day),
+        from_date: new Date(year, month, day),
         is_all_day: false,
         user_id: this.$route.params.id
       })

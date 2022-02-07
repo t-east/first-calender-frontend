@@ -38,7 +38,7 @@
         <div
           class="m-auto p-auto w-full rounded cursor-pointer"
         >
-          <p class="text-lg">{{ day.day }}</p>
+          <CalendarDate :day="day.day" @create="createEvent" />
           <div v-for="(event, i) in putEvent($data.year, $data.month, day.day)" :key="i">
             <div class="p-1 text-black bg-wheat" @click="$emit('detail', event)">
               {{event.title}}
@@ -47,7 +47,6 @@
         </div>
       </div>
     </div>
-    <AtomAddButton @click="$emit('create')" />
   </div>
 </template>
 
@@ -56,6 +55,7 @@ import Vue from 'vue';
 
 import {Event, CreatedEvent} from "~/interfaces/event"
 import AtomAddButton from "~/components/atoms/event/AtomAddButton.vue"
+import CalendarDate from "~/components/molecules/events/CalendarDate.vue"
 
 import ChevronLeftIcon from "~/components/icons/ChevronLeftIcon.vue"
 import ChevronRightIcon from "~/components/icons/ChevronRightIcon.vue"
@@ -64,7 +64,8 @@ export default Vue.extend({
   components: {
     ChevronLeftIcon,
     ChevronRightIcon,
-    AtomAddButton
+    AtomAddButton,
+    CalendarDate
   },
   props: {
     events: { type: Array as Vue.PropType<CreatedEvent[]>, required: false, default: [] as CreatedEvent[]}
@@ -148,6 +149,9 @@ export default Vue.extend({
     selectedDay(date:any):void {
       this.$emit('click', date);
     },
+    createEvent(day: number):void {
+      this.$emit('create', this.$data.year, this.$data.month, day)
+    }
   }
 });
 </script>
