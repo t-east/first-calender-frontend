@@ -3,12 +3,19 @@
     <div class="full bg-wheat">
       <div class="py-96 flex justify-center">
         <div>
-          <h1 id="titlefont" class="text-8xl">Calendar App</h1>
-          <AtomButton
-            val="キャンセル"
-            class="mr-4"
-            @click="$data.isRegisterModalActive=true"
-          />
+          <h1 id="titlefont" class="mb-4 text-8xl">Calendar App</h1>
+          <div class="flex justify-center">
+            <!-- <AtomButton
+              val=""
+              class="mr-4"
+              @click="$data.isRegisterModalActive=true"
+            /> -->
+            <AtomButton
+              val="ユーザ登録"
+              class="mr-4 text-lg"
+              @click="$data.isRegisterModalActive=true"
+            />
+          </div>
         </div>
       </div>
     </div>

@@ -33,21 +33,20 @@
         <span :class="{'text-gray-400': text === '日' || text === '土'}" class="font-bold">{{ text }}</span>
       </div>
     </div>
-    <div v-for="(week, j) in calendars" :key="j" class="grid grid-cols-7 w-full my-3 text-center">
+    <div v-for="(week, j) in calendars" :key="j" class="grid grid-cols-7 w-full mx-1 my-3 text-center">
       <div v-for="(day, k) in week" :key="k" @click="selectedDay(day.date)" class="h-32">
         <div
           class="m-auto p-auto w-full rounded cursor-pointer"
         >
-          <p class="text-lg">{{ day.day }}</p>
+          <CalendarDate :day="day.day" @create="createEvent" />
           <div v-for="(event, i) in putEvent($data.year, $data.month, day.day)" :key="i">
-            <div class="p-1 text-black bg-wheat" @click="$emit('detail', event)">
+            <div class="p-1 my-1 text-black bg-wheat" @click="$emit('detail', event)">
               {{event.title}}
             </div>
           </div>
         </div>
       </div>
     </div>
-    <AtomAddButton @click="$emit('create')" />
   </div>
 </template>
 
@@ -56,6 +55,7 @@ import Vue from 'vue';
 
 import {Event, CreatedEvent} from "~/interfaces/event"
 import AtomAddButton from "~/components/atoms/event/AtomAddButton.vue"
+import CalendarDate from "~/components/molecules/events/CalendarDate.vue"
 
 import ChevronLeftIcon from "~/components/icons/ChevronLeftIcon.vue"
 import ChevronRightIcon from "~/components/icons/ChevronRightIcon.vue"
@@ -64,10 +64,11 @@ export default Vue.extend({
   components: {
     ChevronLeftIcon,
     ChevronRightIcon,
-    AtomAddButton
+    AtomAddButton,
+    CalendarDate
   },
   props: {
-    events: { type: Array as Vue.PropType<CreatedEvent[]>, required: false, default: [] as CreatedEvent[]}
+    events: { type: Array as Vue.PropType<CreatedEvent[]>, required: false, default: []}
   },
   data() {
     return {
@@ -148,6 +149,9 @@ export default Vue.extend({
     selectedDay(date:any):void {
       this.$emit('click', date);
     },
+    createEvent(day: number):void {
+      this.$emit('create', this.$data.year, this.$data.month-1, day)
+    }
   }
 });
 </script>

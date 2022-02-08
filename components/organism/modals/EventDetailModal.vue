@@ -2,27 +2,38 @@
     <BaseModal size="5/6">
       <div class="flex justify-end">
         <div
+          class="cursor-pointer mr-4"
+          @click="deleteEvent"
+        >
+          <TrashIcon />
+        </div>
+        <div
           class="cursor-pointer"
           @click="$emit('close')"
         >
           <CloseIcon />
         </div>
       </div>
-      <div class="w-1/2 flex justify-center">
+      <div class="flex justify-between">
         <AtomInput
           v-model="$data.event.title"
-          class="text-2xl font-bold mb-4 border-b-2 border-gray-400"
+          class="text-2xl w-1/2 font-bold mb-4"
           placeholder="タイトル"
           type="text"
-          :is-for-name="true"
         />
       </div>
-      <div>
-        <!-- <EventTags
-          :tags="$props.inputEvent.tags"
-          @new-tag="createTag"
+      <div class="flex">
+        <TagIcon class="mx-2" />
+        <p>タグ</p>
+      </div>
+        <EventTags
+          :event-id="$props.eventId"
           class="mb-4"
-        /> -->
+        />
+        <div class="flex">
+          <ClockIcon class="mx-2" />
+          <p>時間</p>
+        </div>
         <div class="flex">
         <div class="mr-2">
           <AtomInput
@@ -35,7 +46,7 @@
         <div class="flex">
         </div>
       </div>
-      <div class="flex">
+      <div class="flex mb-4">
         <div class="mr-2">
           <AtomInput
             v-model="$data.event.to_date"
@@ -46,10 +57,15 @@
         <div class="flex">
         </div>
       </div>
+      <div class="flex">
+          <LinkIcon class="mx-2" />
+          <p>URL</p>
+        </div>
+      <div>
         <AtomInput
           v-model="$data.event.url"
-          class="text-lg mb-4 border-b-2 border-gray-400"
-          placeholder="URL"
+          class="text-lg mb-4 border-gray-400"
+          placeholder="http://xxxx.xxx.xx.com"
           type="url"
           :is-for-name="true"
         />
@@ -81,6 +97,10 @@ import Vue from 'vue'
 import {Event, CreatedEvent} from "~/interfaces/event"
 
 import CloseIcon from '~/components/icons/CloseIcon.vue';
+import TrashIcon from '~/components/icons/TrashIcon.vue';
+import LinkIcon from '~/components/icons/LinkIcon.vue';
+import TagIcon from '~/components/icons/TagIcon.vue';
+import ClockIcon from '~/components/icons/ClockIcon.vue';
 import AtomLabel from '~/components/atoms/AtomLabel.vue';
 import AtomButton from '~/components/atoms/AtomButton.vue';
 import AtomInput from '~/components/atoms/AtomInput.vue'
@@ -90,7 +110,6 @@ import AtomInputMessage from '~/components/atoms/AtomInputMessage.vue'
 import AtomCheckbox from '~/components/atoms/AtomCheckbox.vue';
 import ViewForm from '~/components/molecules/ViewForm.vue';
 import EventTags from '~/components/molecules/events/EventTags.vue';
-import EventDateInput from '~/components/molecules/events/EventDateInput.vue';
 import BaseModal from '~/components/organism/modals/BaseModal.vue'
 import NewTagModal from '~/components/molecules/user/modal/NewTagModal.vue'
 export default Vue.extend({
@@ -98,6 +117,10 @@ export default Vue.extend({
     BaseModal,
     CloseIcon,
     AtomLabel,
+    TrashIcon,
+    TagIcon,
+    LinkIcon,
+    ClockIcon,
     ViewForm,
     AtomButton,
     AtomCheckbox,
@@ -105,7 +128,6 @@ export default Vue.extend({
     AtomInputLabel,
     AtomInputMessage,
     EventTags,
-    EventDateInput,
     NewTagModal,
     AtomTextArea
   },
@@ -117,10 +139,11 @@ export default Vue.extend({
       event: {
         title: '',
         description_text: '',
-        // url: '',
+        url: '',
         from_date: new Date(),
         to_date: new Date(),
         is_all_day: false,
+        tags: []
       } as Event,
       isCreateTagModalActive: false
     }
@@ -150,6 +173,14 @@ export default Vue.extend({
         .catch(() => {
         })
     },
+    deleteEvent() {
+      this.$axios.$delete(`/api/event/${this.$route.params.id}/${this.$props.eventId}`, this.$data.event)
+        .then(() => {
+          this.$emit('close')
+        })
+        .catch(() => {
+        })
+		}
   }
 })
 </script> 

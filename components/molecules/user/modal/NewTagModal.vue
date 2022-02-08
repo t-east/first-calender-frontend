@@ -10,7 +10,6 @@
     <div class="border border-dotted border-black text-black rounded-lg">
       <AtomInput
       v-model="$data.newTag"
-      :is-for-name="true"
       @blur="cancelCreateTag"
       @on-enter="addTag"
       />
