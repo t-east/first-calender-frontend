@@ -2,7 +2,7 @@
   <div class="font-family">
     <header class="fixed w-full top-0 flex items-center bg-wheat flex-wrap z-50">
       <div class="flex-1 ml-4 my-4">
-        <NuxtLink to="/" id="titlefont" class="text-col_14 text-moca font-bold text-xl">
+        <NuxtLink to="/" class="text-col_14 text-moca font-bold text-xl">
           Calendar App
         </NuxtLink>
       </div>
@@ -47,8 +47,4 @@ export default Vue.extend({
 </script>
 
 <style scoped>
-@import url('https://fonts.googleapis.com/css?family=Caveat');
-  #titlefont{
-    font-family: 'Caveat', cursive;
-  }
 </style>

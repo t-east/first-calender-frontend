@@ -3,7 +3,7 @@
     <div class="full bg-wheat">
       <div class="py-96 flex justify-center">
         <div>
-          <h1 id="titlefont" class="mb-4 text-8xl">Calendar App</h1>
+          <h1 class="mb-4 text-8xl">Calendar App</h1>
           <div class="flex justify-center">
             <!-- <AtomButton
               val=""
@@ -57,10 +57,6 @@ export default Vue.extend({
 </script>
 
 <style>
-  @import url('https://fonts.googleapis.com/css?family=Caveat');
-  #titlefont{
-    font-family: 'Caveat', cursive;
-  }
   .full {
     position: relative;
     width: 100%;
