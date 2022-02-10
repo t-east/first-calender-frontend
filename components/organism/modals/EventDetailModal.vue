@@ -46,7 +46,7 @@
         <div class="flex">
         </div>
       </div>
-      <div class="flex mb-4">
+      <div class="flex">
         <div class="mr-2">
           <AtomInput
             v-model="$data.event.to_date"
@@ -57,6 +57,7 @@
         <div class="flex">
         </div>
       </div>
+      <div class="text-red-600 mb-4">{{ $data.dateErrMsg }}</div>
       <div class="flex">
           <LinkIcon class="mx-2" />
           <p>URL</p>
@@ -145,7 +146,8 @@ export default Vue.extend({
         is_all_day: false,
         tags: []
       } as Event,
-      isCreateTagModalActive: false
+      isCreateTagModalActive: false,
+      dateErrMsg: ''
     }
   },
   watch: {
@@ -168,10 +170,13 @@ export default Vue.extend({
     updateEvent (): Promise<void> {
       return this.$axios.$put(`/api/event/${this.$route.params.id}/${this.$props.eventId}`, this.$data.event)
         .then((res: CreatedEvent) => {
+          this.$data.dateErrMsg = ''
           this.$emit('close')
         })
-        .catch(() => {
-        })
+        .catch((error:Error) => {
+          console.log(error.message)
+          this.$data.dateErrMsg = '日付の指定に誤りがあります'
+        });
     },
     deleteEvent() {
       this.$axios.$delete(`/api/event/${this.$route.params.id}/${this.$props.eventId}`, this.$data.event)
